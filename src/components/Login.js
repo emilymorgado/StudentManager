@@ -1,13 +1,13 @@
 import React from 'react';
-import { Nav, Header, TextInput, Button } from './common';
+import { Nav, Header, Input, Button } from './common';
 
 const Login = () => {
   return (
     <div>
       <Nav />
       <Header />
-      <TextInput />
-      <TextInput />
+      <Input />
+      <Input />
       <Button />
     </div>
   );
