@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Header = () => {
+const Header = (props) => {
   return (
     <div>
       <h1 style={styles.headerStyle}>
-        Welcome to BookNook!
+        {props.headerText}
       </h1>
     </div>
   );
