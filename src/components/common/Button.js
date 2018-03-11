@@ -1,10 +1,11 @@
 import React from 'react';
 
-const Button = () => {
+const Button = ({ onClick, buttonText}) => {
+  const { buttonStyle, divStyle } = styles;
   return (
-    <div>
-      <button style={styles.buttonStyle}>
-        SIGN IN
+    <div style={divStyle}>
+      <button style={buttonStyle} onClick={onClick}>
+        {buttonText}
       </button>
     </div>
   );
@@ -17,7 +18,11 @@ const styles = {
     width: '300px',
     borderRadius: 20,
     color: '#fff',
-    fontSize: 16
+    fontSize: 16,
+    outline: 0
+  },
+  divStyle: {
+    paddingTop: '25px',
   }
 }
 

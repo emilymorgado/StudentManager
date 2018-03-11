@@ -1,13 +1,15 @@
 import React from 'react';
 
-const Input = (props) => {
+const Input = ({ placeholder, type, value, onChange }) => {
   const { divStyle, inputStyle } = styles;
   return (
     <div style={divStyle}>
       <input
         style={inputStyle}
-        placeholder={props.placeholder}
-        type={props.type}
+        placeholder={placeholder}
+        type={type}
+        value={value}
+        onChange={onChange}
       />
     </div>
   );
