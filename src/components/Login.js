@@ -13,6 +13,7 @@ class Login extends Component {
     this.handleClearForm = this.handleClearForm.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.authenticateEmail = this.authenticateEmail.bind(this);
   }
 
     handleEmailChange(event) {
@@ -34,40 +35,25 @@ class Login extends Component {
     handleFormSubmit(event) {
       event.preventDefault();
       const payload = {
+        authUrl: 'https://api-qa.booknooklearning.com/tutors/authenticate',
         email: this.state.email,
         password: this.state.password
       }
-      console.log(payload.email)
-      console.log(payload.password)
+      this.authenticateEmail(payload)
+    }
 
-
-      let axiosConfig = {
-        headers: {
-            'Content-Type': 'application/json;charset=UTF-8',
-            'Access-Control-Allow-Origin': '*',
-        }
-      };
-
-      let config = {
-        authUrl: 'https://api-qa.booknooklearning.com/tutors/authenticate',
-        email: 'kevin+developer@booknooklearning.com',
-        password: 'mypassword'
-      };
-
-      let auth = axios.post(config.authUrl, {
-        email: 'kevin+developer@booknooklearning.com',
-        password: 'mypassword'
+    authenticateEmail(payload) {
+      axios.post(payload.authUrl, {
+        email: payload.email,
+        password: payload.password
       })
         .then((res) => {
-          console.log(res);
-          var token = res.data.token;
-          config['token'] = token;
-          console.log(config)
+          console.log("SUCCESS")
         })
         .catch((err) => {
           console.log(err);
         })
-    }
+      }
 
 
 
