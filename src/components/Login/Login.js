@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Nav, Header, Input, Button } from './common';
+import { Nav, Header, Input, Button } from '../common';
+import StudentListing from '../StudentListing/StudentListing';
 import axios from 'axios';
 
 class Login extends Component {
@@ -9,7 +10,8 @@ class Login extends Component {
       email: '',
       password: '',
       loggedIn: false,
-      error: ''
+      error: '',
+      token: ''
     }
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleClearForm = this.handleClearForm.bind(this);
@@ -50,59 +52,59 @@ class Login extends Component {
       axios.post(payload.authUrl, {
         email: payload.email,
         password: payload.password
-      })
-        .then((res) => {
-          this.loginSuccess(res)
-        })
-        .catch((err) => {
-          this.loginFail(err)
-        })
+      }).then((res) => {this.loginSuccess(res)})
+        .catch((err) => {this.loginFail(err)})
       }
 
     loginSuccess(res) {
-      this.setState({ loggedIn: true });
+      this.setState({ loggedIn: true, token: res.data.token });
       this.handleClearForm();
-      console.log('SUCCESS')
     }
 
     loginFail(err) {
-      this.setState({ error: 'Authentication Failed' })
+      this.handleClearForm();
+      this.setState({
+        error: 'Authentication Failed' });
       console.log(err);
     }
 
   render() {
-    return (
-      <div>
-        <Nav />
-        <Header headerText='Welcome to BookNook!' />
-        <div style={styles.errorTextStyle}>
-            {this.state.error}
+    if (this.state.loggedIn === false) {
+      return (
+        <div>
+          <Nav />
+          <Header headerText={'Welcome to BookNook!'} />
+          <div style={styles.errorTextStyle}>
+              {this.state.error}
+          </div>
+
+          <form onSubmit={this.handleFormSubmit}>
+            <Input
+              placeholder={'user@email.com'}
+              type={'text'}
+              content={this.state.value}
+              onChange={this.handleEmailChange}
+            />
+
+            <Input
+              placeholder={'password'}
+              type={'password'}
+              content={this.state.value}
+              onChange={this.handlePasswordChange}
+            />
+
+            <Button buttonText='SIGN IN'>
+              <input
+                type={'submit'}
+                value={'Submit'}/>
+             </Button>
+
+          </form>
         </div>
-
-        <form onSubmit={this.handleFormSubmit}>
-          <Input
-            placeholder={'user@email.com'}
-            type={'text'}
-            content={this.state.value}
-            onChange={this.handleEmailChange}
-          />
-
-          <Input
-            placeholder={'password'}
-            type={'password'}
-            content={this.state.value}
-            onChange={this.handlePasswordChange}
-          />
-
-          <Button buttonText='SIGN IN'>
-            <input
-              type="submit"
-              value="Submit"/>
-           </Button>
-
-        </form>
-      </div>
-    );
+      );
+    } else {
+      return <StudentListing token={this.state.token}/>
+    }
   }
 }
 
