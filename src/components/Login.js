@@ -7,13 +7,17 @@ class Login extends Component {
     super(props);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      loggedIn: false,
+      error: ''
     }
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleClearForm = this.handleClearForm.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.authenticateEmail = this.authenticateEmail.bind(this);
+    this.loginSuccess = this.loginSuccess.bind(this);
+    this.loginFail = this.loginFail.bind(this);
   }
 
     handleEmailChange(event) {
@@ -24,11 +28,11 @@ class Login extends Component {
       this.setState({ password: event.target.value });
     }
 
-//chain to login success/fail
     handleClearForm() {
       this.setState({
         email: '',
-        password: ''
+        password: '',
+        error: ''
       });
     }
 
@@ -48,20 +52,32 @@ class Login extends Component {
         password: payload.password
       })
         .then((res) => {
-          console.log("SUCCESS")
+          this.loginSuccess(res)
         })
         .catch((err) => {
-          console.log(err);
+          this.loginFail(err)
         })
       }
 
+    loginSuccess(res) {
+      this.setState({ loggedIn: true });
+      this.handleClearForm();
+      console.log('SUCCESS')
+    }
 
+    loginFail(err) {
+      this.setState({ error: 'Authentication Failed' })
+      console.log(err);
+    }
 
   render() {
     return (
       <div>
         <Nav />
         <Header headerText='Welcome to BookNook!' />
+        <div style={styles.errorTextStyle}>
+            {this.state.error}
+        </div>
 
         <form onSubmit={this.handleFormSubmit}>
           <Input
@@ -85,10 +101,17 @@ class Login extends Component {
            </Button>
 
         </form>
-
       </div>
     );
   }
 }
+
+const styles = {
+  errorTextStyle: {
+    fontSize: 20,
+    alignSelf: 'center',
+    color: 'red'
+  }
+};
 
 export default Login;
