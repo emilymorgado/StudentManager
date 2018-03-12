@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Nav, Header, Input, Button } from './common';
-// import axios from 'axios';
+import axios from 'axios';
 
 class Login extends Component {
   constructor(props) {
@@ -39,7 +39,37 @@ class Login extends Component {
       }
       console.log(payload.email)
       console.log(payload.password)
+
+
+      let axiosConfig = {
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Access-Control-Allow-Origin': '*',
+        }
+      };
+
+      let config = {
+        authUrl: 'https://api-qa.booknooklearning.com/tutors/authenticate',
+        email: 'kevin+developer@booknooklearning.com',
+        password: 'mypassword'
+      };
+
+      let auth = axios.post(config.authUrl, {
+        email: 'kevin+developer@booknooklearning.com',
+        password: 'mypassword'
+      })
+        .then((res) => {
+          console.log(res);
+          var token = res.data.token;
+          config['token'] = token;
+          console.log(config)
+        })
+        .catch((err) => {
+          console.log(err);
+        })
     }
+
+
 
   render() {
     return (
