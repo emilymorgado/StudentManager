@@ -13,7 +13,8 @@ const Header = (props) => {
 const styles = {
   headerStyle: {
     padding: '20px',
-    fontSize: 50
+    fontSize: 50,
+    color: '#444'
   }
 }
 

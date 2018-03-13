@@ -1,9 +1,10 @@
 import React from 'react';
 
-const Input = ({ placeholder, type, value, onChange }) => {
-  const { divStyle, inputStyle } = styles;
+const Input = ({ placeholder, type, value, label, onChange }) => {
+  const { divStyle, inputStyle, labelStyle } = styles;
   return (
     <div style={divStyle}>
+      <label style={labelStyle}>{label}</label>
       <input
         style={inputStyle}
         placeholder={placeholder}
@@ -16,7 +17,7 @@ const Input = ({ placeholder, type, value, onChange }) => {
 }
 
 const styles = {
-  divStyle:{
+  divStyle: {
     paddingBottom: '20px'
   },
   inputStyle: {
@@ -29,6 +30,11 @@ const styles = {
     paddingLeft: 28,
     borderRadius: 5,
     autocorrect: 'off'
+  },
+  labelStyle: {
+    display: 'flex',
+    fontSize: '12px',
+    color: '#d3d3d3'
   }
 }
 
