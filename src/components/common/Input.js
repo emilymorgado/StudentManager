@@ -4,7 +4,9 @@ const Input = ({ placeholder, type, value, label, onChange }) => {
   const { divStyle, inputStyle, labelStyle } = styles;
   return (
     <div style={divStyle}>
-      <label style={labelStyle}>{label}</label>
+      <label style={labelStyle}>{
+        label}
+      </label>
       <input
         style={inputStyle}
         placeholder={placeholder}

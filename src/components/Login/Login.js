@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Nav, Header, Input, Button } from '../common';
-import StudentListing from '../StudentListing/StudentListing';
 import axios from 'axios';
+import StudentListing from '../StudentListing/StudentListing';
+import { Nav, Header, Input, Button } from '../common';
 
 class Login extends Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class Login extends Component {
       loggedIn: false,
       error: '',
       token: ''
-    }
+    };
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleClearForm = this.handleClearForm.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -44,15 +44,15 @@ class Login extends Component {
       authUrl: 'https://api-qa.booknooklearning.com/tutors/authenticate',
       email: this.state.email,
       password: this.state.password
-    }
-    this.authenticateEmail(payload)
+    };
+    this.authenticateEmail(payload);
   }
 
   authenticateEmail(payload) {
     axios.post(payload.authUrl, {
       email: payload.email,
-      password: payload.password
-    }).then(res => {this.loginSuccess(res)})
+      password: payload.password})
+      .then(res => {this.loginSuccess(res)})
       .catch(err => {this.loginFail(err)})
     }
 
@@ -64,7 +64,8 @@ class Login extends Component {
   loginFail(err) {
     this.handleClearForm();
     this.setState({
-      error: 'Authentication Failed' });
+      error: 'Authentication Failed'
+    });
     console.log(err);
   }
 
@@ -77,7 +78,6 @@ class Login extends Component {
           <div style={styles.errorTextStyle}>
               {this.state.error}
           </div>
-
           <form onSubmit={this.handleFormSubmit}>
             <Input
               placeholder={'user@email.com'}
@@ -85,21 +85,18 @@ class Login extends Component {
               content={this.state.value}
               onChange={this.handleEmailChange}
             />
-
             <Input
               placeholder={'password'}
               type={'password'}
               content={this.state.value}
               onChange={this.handlePasswordChange}
             />
-
             <Button buttonText='SIGN IN'>
               <input
                 type={'submit'}
                 value={'Submit'}
               />
              </Button>
-
           </form>
         </div>
       );
