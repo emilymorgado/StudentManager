@@ -11,7 +11,8 @@ class StudentListing extends Component {
       open: false,
       firstName: '',
       lastName: '',
-      username: ''
+      username: '',
+      id: ''
     };
     this.loadStudents = this.loadStudents.bind(this);
     this.renderStudents = this.renderStudents.bind(this);
@@ -27,9 +28,7 @@ class StudentListing extends Component {
 
       axios.get(payload.url, {
         'headers': {'Authorization': payload.auth}})
-      .then(res => {
-        this.setState({ students: res.data })
-      })
+      .then(res => {this.setState({ students: res.data })})
       .catch(err => {console.log(err)})
     }
   }
@@ -46,7 +45,7 @@ class StudentListing extends Component {
           readingLevel={student.reading_level.sequence}
           onClick={event => this.openProfile(student, event)}
         />
-    ))
+    ));
   }
 
   openProfile(student, event) {
@@ -54,8 +53,9 @@ class StudentListing extends Component {
       open: true,
       firstName: student.first_name,
       lastName: student.last_name,
-      username: student.username
-    })
+      username: student.username,
+      id: student.id
+    });
   }
 
   render() {
@@ -80,6 +80,8 @@ class StudentListing extends Component {
           firstName={this.state.firstName}
           lastName={this.state.lastName}
           username={this.state.username}
+          id={this.state.id}
+          token={this.props.token}
         />
       );
     }
@@ -108,6 +110,6 @@ const styles = {
   readingStyle: {
     width: '400px'
   }
-}
+};
 
 export default StudentListing;
