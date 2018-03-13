@@ -36,7 +36,8 @@ class StudentListing extends Component {
           grade={student.grade_level.sequence}
           readingLevel={student.reading_level.sequence}
         />
-    ))}
+    ))
+  }
 
   render() {
     return (
