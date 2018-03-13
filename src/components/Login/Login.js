@@ -22,51 +22,51 @@ class Login extends Component {
     this.loginFail = this.loginFail.bind(this);
   }
 
-    handleEmailChange(event) {
-      this.setState({ email: event.target.value });
+  handleEmailChange(event) {
+    this.setState({ email: event.target.value });
+  }
+
+  handlePasswordChange(event) {
+    this.setState({ password: event.target.value });
+  }
+
+  handleClearForm() {
+    this.setState({
+      email: '',
+      password: '',
+      error: ''
+    });
+  }
+
+  handleFormSubmit(event) {
+    event.preventDefault();
+    const payload = {
+      authUrl: 'https://api-qa.booknooklearning.com/tutors/authenticate',
+      email: this.state.email,
+      password: this.state.password
+    }
+    this.authenticateEmail(payload)
+  }
+
+  authenticateEmail(payload) {
+    axios.post(payload.authUrl, {
+      email: payload.email,
+      password: payload.password
+    }).then(res => {this.loginSuccess(res)})
+      .catch(err => {this.loginFail(err)})
     }
 
-    handlePasswordChange(event) {
-      this.setState({ password: event.target.value });
-    }
+  loginSuccess(res) {
+    this.setState({ loggedIn: true, token: res.data.token });
+    this.handleClearForm();
+  }
 
-    handleClearForm() {
-      this.setState({
-        email: '',
-        password: '',
-        error: ''
-      });
-    }
-
-    handleFormSubmit(event) {
-      event.preventDefault();
-      const payload = {
-        authUrl: 'https://api-qa.booknooklearning.com/tutors/authenticate',
-        email: this.state.email,
-        password: this.state.password
-      }
-      this.authenticateEmail(payload)
-    }
-
-    authenticateEmail(payload) {
-      axios.post(payload.authUrl, {
-        email: payload.email,
-        password: payload.password
-      }).then((res) => {this.loginSuccess(res)})
-        .catch((err) => {this.loginFail(err)})
-      }
-
-    loginSuccess(res) {
-      this.setState({ loggedIn: true, token: res.data.token });
-      this.handleClearForm();
-    }
-
-    loginFail(err) {
-      this.handleClearForm();
-      this.setState({
-        error: 'Authentication Failed' });
-      console.log(err);
-    }
+  loginFail(err) {
+    this.handleClearForm();
+    this.setState({
+      error: 'Authentication Failed' });
+    console.log(err);
+  }
 
   render() {
     if (this.state.loggedIn === false) {
@@ -96,7 +96,8 @@ class Login extends Component {
             <Button buttonText='SIGN IN'>
               <input
                 type={'submit'}
-                value={'Submit'}/>
+                value={'Submit'}
+              />
              </Button>
 
           </form>
