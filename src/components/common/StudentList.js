@@ -1,30 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class StudentList extends Component {
-  constructor(props) {
-    super(props);
-    // const { firstName, lastName, grade, readingLevel, onClick } = props;
-    this.state = {};
-    this.openProfile = this.openProfile.bind(this);
-  }
+const StudentList = ({ firstName, lastName, grade, readingLevel, onClick }) => {
+  const { containerStyle, nameStyle, gradeStyle, readingStyle } = styles;
 
-openProfile(event) {
-  console.log("CLICKED")
-  console.log(event)
-  console.log(this)
-}
-
-render() {
   return (
-    <button style={styles.containerStyle} onClick={this.openProfile}>
-      <p style={styles.nameStyle}>{this.props.firstName} {this.props.lastName}</p>
-      <p style={styles.gradeStyle}>{this.props.grade}</p>
-      <p style={styles.readingStyle}>{this.props.readingLevel}</p>
+    <button style={containerStyle} onClick={onClick}>
+      <p style={nameStyle}>{firstName} {lastName}</p>
+      <p style={gradeStyle}>{grade}</p>
+      <p style={readingStyle}>{readingLevel}</p>
     </button>
   );
 }
-
-}//closes Class
 
 const styles = {
   containerStyle: {
