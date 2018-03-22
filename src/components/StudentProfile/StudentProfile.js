@@ -57,7 +57,7 @@ class StudentProfile extends Component {
     }
 
     const payload = {
-      url: 'https://api-qa.booknooklearning.com/students/:' + this.props.id,
+      url: 'https://api-qa.booknooklearning.com/students/' + this.props.id,
       auth: this.props.token,
       names: names
     };
