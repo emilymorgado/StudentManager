@@ -74,7 +74,7 @@ class Login extends Component {
       return (
         <div>
           <Nav />
-          <Header headerText={'Welcome to BookNook!'} />
+          <Header headerText={'Welcome!'} />
           <div style={styles.errorTextStyle}>
               {this.state.error}
           </div>
